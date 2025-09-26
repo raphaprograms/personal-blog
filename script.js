@@ -1,15 +1,26 @@
+const createPost = document.getElementById('create-post');
 const createdTitle = document.getElementById('create-title');
 const createdBlog = document.getElementById('create-blog');
 const postsDisplay = document.getElementById('display-posts');
+const postButton = document.getElementById('post-button');
+
 
 let posts = [];
 
 window.addEventListener('load', () => {
-    const savedPosts = localStorage.getItem(JSON.parse('savedPosts'))
-    if (savedPosts) {
-        // render those posts
-        posts = savedPosts;
-    }
+    // const savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
+    // if (savedPosts) {
+    //     // render those posts
+    //     posts = savedPosts;
+    // }
+
+    // this could work too
+    // try {
+    //     savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
+    // } catch (e) {
+    //     console.error('Error parsing saved posts')
+    //     savedPosts = null;
+    // }
 });
 
 
@@ -43,6 +54,9 @@ function renderBlogPost() {
         blog: createdBlog.value,
         ID: getPostID()
     }
+     
+    posts.push(postObj);
+    
 
     const postMod = document.createElement('div');
 
@@ -50,14 +64,14 @@ function renderBlogPost() {
             postTitle.textContent = createdTitle.value;
         postMod.appendChild(postTitle)
 
-        const postBlog = document.createElement('div');
+        const postBlog = document.createElement('p');
             postBlog.textContent = createdBlog.value;
         postMod.appendChild(postBlog);
 
-        const editPostbtn = document.createElement('button');
-            editPostbtn.textContent = 'edit';
-            editPostbtn.classList.add('edit');
-        postMod.appendChild(editPostbtn);
+        const editPostBtn = document.createElement('button');
+            editPostBtn.textContent = 'edit';
+            editPostBtn.classList.add('edit');
+        postMod.appendChild(editPostBtn);
 
         const deletePostBtn = document.createElement('button')
             deletePostBtn.textContent = 'Delete';
@@ -65,6 +79,16 @@ function renderBlogPost() {
         postMod.appendChild(deletePostBtn);
 
     postsDisplay.appendChild(postMod);
+
 }
 
+postButton.addEventListener('click', (event) => {
+    // if (event.target.classList.contains('post-button')) {
+    //     localStorage.setItem('savedPosts', JSON.stringify(posts));
+    // }
+    renderBlogPost();
+    console.log(posts);
+    createdTitle.value = '';
+    createdBlog.value = '';
 
+});
