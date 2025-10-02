@@ -80,6 +80,19 @@ function renderBlogPost() {
 
     postsDisplay.appendChild(postMod);
 
+    const editMod = document.createElement('div');
+
+    editMod.addEventListener('click', (event) => {
+    
+            let editedTitle = document.createElement('input');
+                editedTitle.value = postTitle.value;
+
+            editMod.appendChild(editedTitle);
+
+        postMod.appendChild(editMod);
+        
+    })
+
 }
 
 postButton.addEventListener('click', (event) => {
