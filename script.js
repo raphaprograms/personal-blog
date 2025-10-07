@@ -45,14 +45,11 @@ function getPostID() {
 
 function validateInput(inputElement, errorSpan, customValidationFunction = null) {
     errorSpan.textContent = '';
+    inputElement.setCustomValidity('');
     inputElement.classList.remove('invalid', 'valid');
 
-    if (inputElement.required && inputElement.value.trim() === '') {
-        inputElement.setCustomValidity("You can't leave this blank.");
-    } else if (customValidationFunction) {
+    if (customValidationFunction) {
         customValidationFunction(inputElement);
-    } else {
-        inputElement.setCustomValidity('');
     }
 
     const isValid = inputElement.checkValidity();
@@ -66,6 +63,22 @@ function validateInput(inputElement, errorSpan, customValidationFunction = null)
     return isValid;
 }
 
+function checkTitleValidity(titleInput) {
+    if (titleInput.value.trim() === '') {
+        titleInput.setCustomValidity("This isn't enough");
+    } else {
+        titleInput.setCustomValidity('');
+    }
+}
+
+function checkBlogValidity(blogInput) {
+    if (blogInput.value.trim() === '') {
+        blogInput.setCustomValidity("This need to be more exciting!");
+    } else {
+        blogInput.setCustomValidity('');
+    }
+}
+
 function createPostElement(postObj) {
     const postMod = document.createElement('div');
     postMod.classList.add('post');
@@ -77,6 +90,10 @@ function createPostElement(postObj) {
         const postBlog = document.createElement('p');
             postBlog.textContent = postObj.blog;
         postMod.appendChild(postBlog);
+
+        const postTimeStamp = document.createElement('p');
+            postTimeStamp.textContent = `${postObj.timestamp}`;
+        postMod.appendChild(postTimeStamp);
 
         const editPostBtn = document.createElement('button');
             editPostBtn.textContent = 'edit';
@@ -120,9 +137,12 @@ function handleCreatePost() {
         
         const postID = getPostID();
         if (postID !== null) {
+
+            const timestamp = new Date().toLocaleString();
             const postObj = {
                     title: title,
                     blog: blog,
+                    timestamp: timestamp,
                     ID: postID
             };
             posts.push(postObj);
@@ -196,8 +216,14 @@ function savePostsToLocalStorage() {
 
 
 function initializeEventListeners() {
+
     postButton.addEventListener('click', handleCreatePost);
     postsDisplay.addEventListener('click', handlePostActions);
-    createdTitle.addEventListener('input', validateInput(createdTitle, document.getElementById('titleError')));
-    createdBlog.addEventListener('input', validateInput(createdBlog, document.getElementById('blogError')));
+
+    createdTitle.addEventListener('input', () => {
+        validateInput(createdTitle, document.getElementById('titleError'), checkTitleValidity);
+    });
+    createdBlog.addEventListener('input', () => {
+        validateInput(createdBlog, document.getElementById('blogError'), checkBlogValidity);
+    });
 }

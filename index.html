@@ -9,12 +9,12 @@
 </head>
 <body>
     <main>
-        <section id="create-post">
+        <section id="create-post" class="form-group">
             <label for="create-title"></label>
             <input type="text" id="create-title" name="create-title" required>
             <span class="error-message" id="titleError"></span>
  
-            <textarea name="create-blog" id="create-blog" cols="30" rows="10"></textarea>
+            <textarea name="create-blog" id="create-blog" cols="30" rows="10" minlength="1" required></textarea>
             <span class="error-message" id="blogError"></span>
 
             <button type="submit" id="post-button">Post</button>

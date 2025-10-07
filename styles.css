@@ -24,3 +24,43 @@ main {
     min-height: 20vh;
     margin-top: 5%;
 }
+
+
+.form-group {
+  margin-bottom: 15px;
+}
+ 
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+ 
+.form-group input[type="text"],
+.form-group input[type="textarea"] {
+  width: calc(100% - 22px); /* Account for padding and border */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Makes width calculation easier */
+}
+ 
+.form-group input:invalid {
+  border-color: #e74c3c; /* Light red for invalid built-in states */
+}
+/* You can add a .valid class if you want to style valid inputs too */
+ 
+.form-group .error-message {
+  display: block;
+  color: #e74c3c; /* Red for error messages */
+  font-size: 0.9em;
+  margin-top: 5px;
+  min-height: 1em; /* Reserve space to prevent layout shifts */
+}
+ 
+.form-group small {
+    display: block;
+    font-size: 0.8em;
+    color: #777;
+    margin-top: 3px;
+}
