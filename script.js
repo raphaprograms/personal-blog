@@ -15,6 +15,8 @@ window.addEventListener('load', () => {
         const savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
         if (savedPosts) {
             posts = savedPosts;
+            const used = new Set(posts.map(p => Number(p.ID)));
+            availableIDs = availableIDs.filter(id => !used.has(id));
             renderAllPosts();
         }
     } catch(e) {
@@ -169,16 +171,17 @@ function handleDeletePost(postID) {
     }
 }
 
-function handleEditPost(postID) {
-    const postIndex = posts.findIndex(post => post.ID == postID);
-    if (postIndex > -1) {
-        const postToEdit = posts[postIndex];
-        createdTitle.value = postToEdit.title;
-        createdBlog.value = postToEdit.blog;
+
+// function handleEditPost(postID) {
+//     const postIndex = posts.findIndex(post => post.ID == postID);
+//     if (postIndex > -1) {
+//         const postToEdit = posts[postIndex];
+//         createdTitle.value = postToEdit.title;
+//         createdBlog.value = postToEdit.blog;
        
-        handleDeletePost(postID);
-    }
-}
+//         handleDeletePost(postID);
+//     }
+// }
 
 function handlePostActions(event) {
     const target = event.target;
